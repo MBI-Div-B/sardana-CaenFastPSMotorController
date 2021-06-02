@@ -13,7 +13,7 @@ class CaenFastPSMotorController(MotorController):
     MaxDevice = 1
     
     def __init__(self, inst, props, *args, **kwargs):
-        super(caenFastPSController, self).__init__(
+        super(CaenFastPSMotorController, self).__init__(
             inst, props, *args, **kwargs)
 
         self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 
@@ -24,9 +24,9 @@ class CaenFastPSMotorController(MotorController):
         print('CAEN FAST-PS Initialization ... '),
         [_, idn] = self.__sendAndReceive('VER')
         if idn:
-            print 'SUCCESS for model: %s' % idn
+            print ('SUCCESS for model: %s' % idn)
         else:
-            print 'FAILED!'
+            print ('FAILED!')
         # initialize hardware communication        
         self._motors = {}
         self._isMoving = None
@@ -121,7 +121,7 @@ class CaenFastPSMotorController(MotorController):
         except socket.timeout:
             return [-2, '']
         except socket.error:
-            print 'Socket error'
+            print ('Socket error')
             return [-2, '']
         
         for i in range(len(ret)):
