@@ -106,8 +106,10 @@ class CaenFastPSMotorController(MotorController):
 
         if mode == 'moff':
             self.__sendAndReceive('MOFF')
+            return ''
         elif mode == 'mon':
             self.__sendAndReceive('MON')
+            return ''
         else:
             self._log.warning('Invalid command')
             return 'ERROR: Invalid command requested.'
