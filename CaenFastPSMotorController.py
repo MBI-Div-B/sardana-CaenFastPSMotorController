@@ -29,7 +29,7 @@ class CaenFastPSMotorController(MotorController):
             print ('FAILED!')
         # initialize hardware communication        
         self._motors = {}
-        self._isMoving = None
+        self._isMoving = False
         self._moveStartTime = None
         self._threshold = 0.0001
         self._target = None
@@ -114,10 +114,11 @@ class CaenFastPSMotorController(MotorController):
 
     def __sendAndReceive(self, command):
         try:
-            self.conn.send(command + '\r')
-            ret = self.conn.recv(1024)
+            cmd = command+'\r'
+            self.conn.send(cmd.encode("utf-8"))
+            ret = self.conn.recv(1024).decode("utf-8")
             while (ret.find('\r\n') == -1):
-                ret += self.conn.recv(1024)
+                ret += self.conn.recv(1024).decode("utf-8")
         except socket.timeout:
             return [-2, '']
         except socket.error:
